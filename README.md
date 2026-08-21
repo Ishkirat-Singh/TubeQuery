@@ -45,6 +45,9 @@ TubeQuery is an AI-powered tool that allows users to "chat" with any YouTube vid
     ```bash
     pip install -r requirements.txt
     ```
+    Make sure the venv from step 2 is **activated** first — `No module named
+    dotenv` when running the app means you are on the system Python, not the venv.
+    Check with `which python` (should point inside `venv/`).
 
 4.  **Set up Environment Variables:**
     * Copy `.env.example` to `.env` and fill it in:

@@ -164,15 +164,17 @@ def main():
             with st.chat_message("user"):
                 st.markdown(prompt)
 
-            with st.chat_message("assistant"):
-                with st.spinner("Thinking..."):
-                    response = st.session_state.chain.invoke({
-                        "input": prompt,
-                        "chat_history": chat_history,
-                    })
-                    answer = response["answer"]
-                    st.markdown(answer)
-                    st.session_state.messages.append({"role": "assistant", "content": answer})
+            with st.chat_message("assistant"), st.spinner("Thinking..."):
+                response = st.session_state.chain.invoke({
+                    "input": prompt,
+                    "chat_history": chat_history,
+                })
+            st.session_state.messages.append(
+                {"role": "assistant", "content": response["answer"]}
+            )
+            # Let the history loop above be the only thing that renders messages,
+            # otherwise the inline copy lingers as a stale grey duplicate.
+            st.rerun()
 
     else:
         st.info("👈 Please paste a YouTube URL in the sidebar to get started.")
